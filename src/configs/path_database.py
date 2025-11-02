@@ -1,0 +1,1 @@
+PATH_DATABASE = "/usr/share/GeoIP/"
