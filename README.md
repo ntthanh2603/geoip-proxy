@@ -156,7 +156,6 @@ docker pull ghcr.io/ntthanh2603/geoip-proxy:251102
 | Workflow | Schedule | Purpose |
 |----------|----------|---------|
 | **Daily Docker Build** | Daily at 00:00 UTC | Update GeoIP databases & build images |
-| **Cleanup Old Images** | Weekly (Sunday) | Remove outdated images (keep 10 latest) |
 
 ### Setup GitHub Actions
 
@@ -186,8 +185,7 @@ The workflow will:
 ```
 geoip-proxy/
 ├── .github/workflows/          # CI/CD workflows
-│   ├── docker-build.yml        # Daily build automation
-│   └── cleanup-old-images.yml  # Image cleanup
+│   └── docker-build.yml        # Daily build automation
 ├── src/
 │   ├── app.py                  # FastAPI application
 │   ├── configs/
