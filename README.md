@@ -155,6 +155,51 @@ geoip-proxy/
 - **Docker** - Containerization
 - **uvicorn** - ASGI server
 
+## GitHub Container Registry
+
+Pre-built Docker images are automatically published to GitHub Container Registry with daily updated GeoIP databases.
+
+### Pull and run from GHCR:
+
+```bash
+docker pull ghcr.io/ntthanh2603/geoip-proxy:latest
+docker run -p 4360:4360 -e PORT=4360 ghcr.io/ntthanh2603/geoip-proxy:latest
+```
+
+### Available tags:
+
+- `latest` - Latest build from main branch
+- `YYMMDD` - Daily builds with updated GeoIP databases (e.g., `251102` for Nov 2, 2025)
+- `main-<sha>` - Specific commit builds
+
+## GitHub Actions
+
+This project uses GitHub Actions for automated builds:
+
+### Workflows:
+
+1. **Daily Docker Image Build** (`.github/workflows/docker-build.yml`)
+   - Runs daily at midnight UTC to update GeoIP databases
+   - Triggered on push to main branch
+   - Manually triggerable via workflow_dispatch
+   - Builds multi-platform images (linux/amd64, linux/arm64)
+   - Publishes to GitHub Container Registry
+
+2. **Cleanup Old Images** (`.github/workflows/cleanup-old-images.yml`)
+   - Runs weekly to remove old container images
+   - Keeps the 10 most recent versions
+
+### Required Secrets:
+
+To use GitHub Actions, add these secrets to your repository:
+
+1. Go to **Settings** → **Secrets and variables** → **Actions**
+2. Add the following secrets:
+   - `GEOIPUPDATE_ACCOUNT_ID` - Your MaxMind Account ID
+   - `GEOIPUPDATE_LICENSE_KEY` - Your MaxMind License Key
+
+**Note:** `GITHUB_TOKEN` is automatically provided by GitHub Actions.
+
 ## License
 
 This project uses the GeoLite2 data created by MaxMind, available from [MaxMind](https://www.maxmind.com).
