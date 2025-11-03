@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 class IPGeoLocation(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
     query: str = ""
     status: str = ""
     continent: str = ""

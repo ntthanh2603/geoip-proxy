@@ -124,7 +124,7 @@ class GeoIPService:
 
                 isp = asn_org
                 org = asn_org
-                as_number = f"AS{asn_num} {asn_org}" if asn_num else ""
+                as_number = f"AS{asn_num} {asn_org}"
                 asname = asn_org
 
             # Return Pydantic model instance
@@ -147,7 +147,7 @@ class GeoIPService:
                 currency=currency,
                 isp=isp,
                 org=org,
-                as_=as_number,  # Use as_ for the field with alias "as"
+                as_=as_number, 
                 asname=asname,
             )
 
