@@ -41,12 +41,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src src
 COPY main.py .
 
-# Copy entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Alternative approach: Use inline script instead of external file
+RUN echo '#!/bin/bash\n\n# Copy GeoIP databases to mounted volume if they don'"'"'t exist\nif [ ! -f "/usr/share/GeoIP/GeoLite2-City.mmdb" ]; then\n    echo "Copying GeoIP databases to mounted volume..."\n    cp -r /tmp/geoip/* /usr/share/GeoIP/ 2>/dev/null || echo "No databases to copy from /tmp/geoip"\nfi\n\n# Start the API server\necho "Starting API server..."\nexec python main.py' > /entrypoint.sh && chmod +x /entrypoint.sh
 
 ENV PORT=4360
 
 EXPOSE ${PORT}
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/entrypoint.sh"]

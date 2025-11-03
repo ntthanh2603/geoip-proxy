@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copy GeoIP databases to mounted volume if they don't exist
 if [ ! -f "/usr/share/GeoIP/GeoLite2-City.mmdb" ]; then
