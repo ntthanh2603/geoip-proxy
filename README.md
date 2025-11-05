@@ -1,4 +1,4 @@
-# GeoIP Proxy
+# GeoIP Server
 
 [![Daily Docker Build](https://github.com/ntthanh2603/geoip-proxy/actions/workflows/docker-build.yml/badge.svg)](https://github.com/ntthanh2603/geoip-proxy/actions/workflows/docker-build.yml)
 [![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/ntthanh2603/geoip-proxy/pkgs/container/geoip-proxy)
