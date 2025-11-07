@@ -1,9 +1,12 @@
 import maxminddb
 import os
 import time
+import logging
 from typing import Optional, Dict, Union
 from src.configs.path_database import PATH_DATABASE
 from src.types.ip_geolocaltion import IPGeoLocation
+
+logger = logging.getLogger(__name__)
 
 
 class GeoIPService:
@@ -17,50 +20,29 @@ class GeoIPService:
 
     def sync_database(self):
         """Load all GeoIP databases"""
-        self.lookup_city = self.load_database(
-            os.path.join(PATH_DATABASE, "GeoLite2-City.mmdb")
-        )
-        print("GeoLite2-City database loaded successfully")
-
-        self.lookup_country = self.load_database(
-            os.path.join(PATH_DATABASE, "GeoLite2-Country.mmdb")
-        )
-        print("GeoLite2-Country database loaded successfully")
-
-        self.lookup_asn = self.load_database(
-            os.path.join(PATH_DATABASE, "GeoLite2-ASN.mmdb")
-        )
-        print("GeoLite2-ASN database loaded successfully")
+        logger.info("Loading GeoIP databases...")
+        self.lookup_city = self.load_database(os.path.join(PATH_DATABASE, "GeoLite2-City.mmdb"))
+        self.lookup_country = self.load_database(os.path.join(PATH_DATABASE, "GeoLite2-Country.mmdb"))
+        self.lookup_asn = self.load_database(os.path.join(PATH_DATABASE, "GeoLite2-ASN.mmdb"))
+        logger.info("✓ All databases loaded")
 
     def load_database(self, path: str) -> maxminddb.Reader:
-        """
-        Load a MaxMind database with retry logic
+        """Load a MaxMind database with retry logic"""
+        database_name = os.path.basename(path)
+        retry_count = 0
 
-        Args:
-            path: Path to the .mmdb file
-
-        Returns:
-            maxminddb.Reader instance
-        """
         while True:
             try:
                 return maxminddb.open_database(path)
             except Exception as error:
-                print(f"Failed to load {path}, retrying in 1 second...", error)
+                retry_count += 1
+                logger.warning(f"{database_name} failed (attempt #{retry_count}): {error}")
                 time.sleep(1)
 
     def lookup(self, ip: str) -> Union[IPGeoLocation, Dict[str, str]]:
-        """
-        Lookup geolocation information for an IP address
-
-        Args:
-            ip: IP address to lookup
-
-        Returns:
-            IPGeoLocation object or dictionary with error
-        """
+        """Lookup geolocation information for an IP address"""
         if not self.lookup_city or not self.lookup_country or not self.lookup_asn:
-            return {"error": "GeoIP databases not fully loaded"}
+            return {"error": "Databases not loaded"}
 
         try:
             city_info = self.lookup_city.get(ip)
@@ -151,8 +133,11 @@ class GeoIPService:
                 asname=asname,
             )
 
+        except ValueError:
+            return {"error": "Invalid IP address format"}
         except Exception as e:
-            return {"error": f"Error looking up IP: {str(e)}"}
+            logger.error(f"Lookup error for {ip}: {str(e)}")
+            return {"error": f"Lookup error: {str(e)}"}
 
 
 # Create singleton instance

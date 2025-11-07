@@ -1,5 +1,5 @@
 services:
-  api:
+  geoip_api:
     container_name: geoip_api
     platform: linux/amd64
     build:
@@ -14,6 +14,13 @@ services:
     volumes:
       - ./data:/usr/share/GeoIP
     restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   default:
