@@ -1,7 +1,7 @@
 # GeoIP Server
 
-[![Daily Docker Build](https://github.com/ntthanh2603/geoip-proxy/actions/workflows/docker-build.yml/badge.svg)](https://github.com/ntthanh2603/geoip-proxy/actions/workflows/docker-build.yml)
-[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/ntthanh2603/geoip-proxy/pkgs/container/geoip-proxy)
+[![Daily Docker Build](https://github.com/ntthanh2603/geoip-server/actions/workflows/docker-build.yml/badge.svg)](https://github.com/ntthanh2603/geoip-server/actions/workflows/docker-build.yml)
+[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/ntthanh2603/geoip-server/pkgs/container/geoip-server)
 [![Python](https://img.shields.io/badge/python-3.11-blue?logo=python)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-00a393?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -25,8 +25,8 @@ A lightweight FastAPI service that provides IP geolocation data using MaxMind's 
 Pull and run the pre-built image from GitHub Container Registry:
 
 ```bash
-docker pull ghcr.io/ntthanh2603/geoip-proxy:latest
-docker run -p 4360:4360 -e PORT=4360 ghcr.io/ntthanh2603/geoip-proxy:latest
+docker pull ghcr.io/ntthanh2603/geoip-server:latest
+docker run -p 4360:4360 ghcr.io/ntthanh2603/geoip-server:latest
 ```
 
 Access the API at: **http://localhost:4360**
@@ -34,8 +34,8 @@ Access the API at: **http://localhost:4360**
 ### Using Docker Compose
 
 ```bash
-git clone https://github.com/ntthanh2603/geoip-proxy.git
-cd geoip-proxy
+git clone https://github.com/ntthanh2603/geoip-server.git
+cd geoip-server
 cp .env.example .env
 # Edit .env with your MaxMind credentials
 docker-compose up -d
@@ -90,8 +90,8 @@ Get a MaxMind license key (free):
 
 ```bash
 # Clone repository
-git clone https://github.com/ntthanh2603/geoip-proxy.git
-cd geoip-proxy
+git clone https://github.com/ntthanh2603/geoip-server.git
+cd geoip-server
 
 # Configure environment
 cp .env.example .env
@@ -129,7 +129,7 @@ docker-compose down
 ## 📦 GitHub Container Registry
 
 Pre-built Docker images with daily updated GeoIP databases are available at:
-**[ghcr.io/ntthanh2603/geoip-proxy](https://github.com/ntthanh2603/geoip-proxy/pkgs/container/geoip-proxy)**
+**[ghcr.io/ntthanh2603/geoip-server](https://github.com/ntthanh2603/geoip-server/pkgs/container/geoip-server)**
 
 ### Available Tags
 
@@ -143,10 +143,10 @@ Pre-built Docker images with daily updated GeoIP databases are available at:
 
 ```bash
 # Latest version
-docker pull ghcr.io/ntthanh2603/geoip-proxy:latest
+docker pull ghcr.io/ntthanh2603/geoip-server:latest
 
 # Specific date (e.g., Nov 2, 2025)
-docker pull ghcr.io/ntthanh2603/geoip-proxy:251102
+docker pull ghcr.io/ntthanh2603/geoip-server:251102
 ```
 
 ## ⚙️ GitHub Actions
@@ -183,7 +183,7 @@ The workflow will:
 ## 📂 Project Structure
 
 ```
-geoip-proxy/
+geoip-server/
 ├── .github/workflows/          # CI/CD workflows
 │   └── docker-build.yml        # Daily build automation
 ├── src/
@@ -223,14 +223,14 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📧 Support
 
-- **Issues:** [GitHub Issues](https://github.com/ntthanh2603/geoip-proxy/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/ntthanh2603/geoip-proxy/discussions)
+- **Issues:** [GitHub Issues](https://github.com/ntthanh2603/geoip-server/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/ntthanh2603/geoip-server/discussions)
 
 ---
 
 <div align="center">
 
-**[⭐ Star this repo](https://github.com/ntthanh2603/geoip-proxy)** if you find it useful!
+**[⭐ Star this repo](https://github.com/ntthanh2603/geoip-server)** if you find it useful!
 
 Made with ❤️ using FastAPI and MaxMind GeoLite2
 
